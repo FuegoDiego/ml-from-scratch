@@ -20,7 +20,7 @@ h = .02  # step size in the mesh
 cmap_light = ListedColormap(['orange', 'cyan', 'cornflowerblue'])
 cmap_bold = ListedColormap(['darkorange', 'c', 'darkblue'])
 
-for weights in ['distance']:
+for weights in ['uniform', 'distance']:
     # we create an instance of Neighbours Classifier and fit the data.
     clf = KNeighboursClassifier(n_neighbours, weights=weights)
     clf.fit(X, y)

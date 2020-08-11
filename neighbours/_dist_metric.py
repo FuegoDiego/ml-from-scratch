@@ -1,7 +1,7 @@
 import numpy as np
 
 
-# I mirrored the class implementation from scikit-learn's code but I implemented the metrics from their formulas myself.
+# I mirrored the class implementation from scikit-learn's code but I implemented the metric formulas myself.
 
 class DistMetric:
     def __init__(self):
@@ -10,6 +10,15 @@ class DistMetric:
 
     @classmethod
     def get_metric(cls, metric, **kwargs):
+        """Retrieve the corresponding metric object based on the parameter 'metric'.
+
+        Parameters
+        ----------
+        metric: str
+            The type of metric to retrieve
+        **kwargs: dict
+            Additional arguments to be passed to the requested metric
+        """
         if isinstance(metric, DistMetric):
             return metric
 
@@ -41,6 +50,10 @@ class DistMetric:
         This should be overridden in a base class.
         """
         return -999
+
+
+"""The following subclasses each have a 'dist' method. Each of these methods consumes an numpy.ndarray of shape (n, m) 
+and an numpy.ndarray of shape (1, n)."""
 
 
 class EuclideanDist(DistMetric):

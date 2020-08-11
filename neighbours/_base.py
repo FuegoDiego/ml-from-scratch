@@ -16,9 +16,10 @@ def _get_weights(dist, weights):
 
     Parameters
     ----------
-    dist : ndarray
+    dist : numpy.ndarray
         The input distances
-    weights : {'uniform', 'distance'}
+    weights : str
+        {'uniform', 'distance'}
 
     Returns
     -------

@@ -19,6 +19,19 @@ class KNeighboursClassifier:
         self.X_train_ = None  # this is initialized in the fit method
 
     def fit(self, X, y):
+        """Memorize the training data and designate the metric based on the 'p' value.
+
+        Parameters
+        ----------
+        X : numpy.ndarray
+            Array of training points with shape (n, m) where n is the number of points and m is the number of features
+        y : numpy.ndarray
+            Array of training labels with shape (1, m)
+
+        Returns:
+        -------
+        self
+        """
         if self.metric == 'minkowski':
             if self.p < 1:
                 raise ValueError("The value of p must be greater than 1 for the 'minkowski' distance")
@@ -39,17 +52,33 @@ class KNeighboursClassifier:
         return self
 
     def predict(self, x):
+        """Predict the label of the given point
+
+        Parameters
+        ----------
+        x : numpy.ndarray
+            Point to be predicted. Array of shape (1, m) where m is the number of features
+
+        Returns
+        -------
+        predict_label : int
+            Predicted label/class
+        """
+
         if not isinstance(x, np.ndarray):
             x = np.array(x)
 
         k = self.n_neighbours
 
+        # the metric object used to calculate the distance between training data and new data
         if self.metric_params is None:
             dist_metric = DistMetric.get_metric(self.metric)
         else:
             dist_metric = DistMetric.get_metric(self.metric, *self.metric_params)
         dist = dist_metric.dist(self.X_train_, x)
 
+        # if self.weights is 'distance', the weights are the inverse of the distance between training data and the
+        # point
         weights = _get_weights(dist, self.weights)
 
         if weights is None:
